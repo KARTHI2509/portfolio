@@ -278,9 +278,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 10. Interactive 3D Parallax Tilt for Hero Card
     const heroCard = document.getElementById('heroProfileCard');
+    const heroCanvas = document.getElementById('neural-canvas');
     if (heroCard) {
         const glow = heroCard.querySelector('.profile-card-glow');
-        const img = heroCard.querySelector('.hero-profile-img');
 
         heroCard.addEventListener('mousemove', (e) => {
             const rect = heroCard.getBoundingClientRect();
@@ -299,11 +299,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 glow.style.opacity = '1';
                 glow.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(59, 130, 246, 0.4) 0%, transparent 70%)`;
             }
-            if (img) {
-                // Parallax shift for the image
-                const moveX = ((x - centerX) / centerX) * 8; // Max 8px shift
-                const moveY = ((y - centerY) / centerY) * 8;
-                img.style.transform = `translate3d(${moveX}px, ${moveY}px, 20px) scale(1.05)`;
+            if (heroCanvas) {
+                // Parallax shift for the canvas core
+                const moveX = ((x - centerX) / centerX) * 12; // Max 12px shift
+                const moveY = ((y - centerY) / centerY) * 12;
+                heroCanvas.style.transform = `translate3d(${moveX}px, ${moveY}px, 20px) scale(1.03)`;
             }
         });
 
@@ -312,10 +312,160 @@ document.addEventListener('DOMContentLoaded', () => {
             if (glow) {
                 glow.style.opacity = '0';
             }
-            if (img) {
-                img.style.transform = 'translateZ(20px) scale(1.02)';
+            if (heroCanvas) {
+                heroCanvas.style.transform = 'translateZ(20px) scale(1)';
             }
         });
+    }
+
+    // 12. Interactive Canvas Neural Network Animation
+    if (heroCanvas) {
+        const ctx = heroCanvas.getContext('2d');
+        let width = heroCanvas.width = heroCanvas.offsetWidth;
+        let height = heroCanvas.height = heroCanvas.offsetHeight;
+
+        // Resize handler
+        window.addEventListener('resize', () => {
+            if (heroCanvas.offsetWidth && heroCanvas.offsetHeight) {
+                width = heroCanvas.width = heroCanvas.offsetWidth;
+                height = heroCanvas.height = heroCanvas.offsetHeight;
+            }
+        });
+
+        // Neural Net Config
+        const numNodes = 40;
+        const connectionDist = 80;
+        const nodes = [];
+        let canvasMouseX = null;
+        let canvasMouseY = null;
+        let isCanvasHovered = false;
+
+        // Create initial nodes
+        for (let i = 0; i < numNodes; i++) {
+            nodes.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                vx: (Math.random() - 0.5) * 0.6,
+                vy: (Math.random() - 0.5) * 0.6,
+                r: Math.random() * 2 + 1.5,
+                pulseSpeed: 0.03 + Math.random() * 0.04,
+                pulseVal: Math.random() * Math.PI
+            });
+        }
+
+        // Mouse hover inside card coordinates
+        heroCard.addEventListener('mousemove', (e) => {
+            const rect = heroCanvas.getBoundingClientRect();
+            canvasMouseX = e.clientX - rect.left;
+            canvasMouseY = e.clientY - rect.top;
+            isCanvasHovered = true;
+        });
+
+        heroCard.addEventListener('mouseleave', () => {
+            canvasMouseX = null;
+            canvasMouseY = null;
+            isCanvasHovered = false;
+        });
+
+        // Animation Loop
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+
+            // Fetch theme colors dynamically
+            const theme = document.documentElement.getAttribute('data-theme') || 'light';
+            const nodeColor = theme === 'dark' ? 'rgba(59, 130, 246, 0.7)' : 'rgba(29, 78, 216, 0.7)';
+            const lineColor = theme === 'dark' ? 'rgba(59, 130, 246, 0.15)' : 'rgba(29, 78, 216, 0.12)';
+            const pulseColor = theme === 'dark' ? 'rgba(138, 43, 226, 0.8)' : 'rgba(138, 43, 226, 0.7)';
+
+            // 1. Update and draw nodes
+            nodes.forEach(node => {
+                node.x += node.vx;
+                node.y += node.vy;
+
+                if (node.x < 0 || node.x > width) node.vx *= -1;
+                if (node.y < 0 || node.y > height) node.vy *= -1;
+
+                // Gentle mouse attraction
+                if (isCanvasHovered && canvasMouseX !== null && canvasMouseY !== null) {
+                    const dx = canvasMouseX - node.x;
+                    const dy = canvasMouseY - node.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 100) {
+                        node.x += dx * 0.015;
+                        node.y += dy * 0.015;
+                    }
+                }
+
+                // Node pulsing effect
+                node.pulseVal += node.pulseSpeed;
+                const sizeMult = 1 + Math.sin(node.pulseVal) * 0.3;
+
+                // Draw node glow
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, node.r * sizeMult + 2, 0, Math.PI * 2);
+                ctx.fillStyle = theme === 'dark' ? 'rgba(59, 130, 246, 0.15)' : 'rgba(29, 78, 216, 0.1)';
+                ctx.fill();
+
+                // Draw core node
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, node.r * sizeMult, 0, Math.PI * 2);
+                ctx.fillStyle = nodeColor;
+                ctx.fill();
+            });
+
+            // 2. Draw connections & pulses
+            for (let i = 0; i < nodes.length; i++) {
+                const nodeA = nodes[i];
+
+                // Mouse connections
+                if (isCanvasHovered && canvasMouseX !== null && canvasMouseY !== null) {
+                    const dx = canvasMouseX - nodeA.x;
+                    const dy = canvasMouseY - nodeA.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 120) {
+                        ctx.beginPath();
+                        ctx.moveTo(nodeA.x, nodeA.y);
+                        ctx.lineTo(canvasMouseX, canvasMouseY);
+                        const alpha = (1 - dist / 120) * 0.4;
+                        ctx.strokeStyle = `rgba(59, 130, 246, ${alpha})`;
+                        ctx.lineWidth = 1.2;
+                        ctx.stroke();
+                    }
+                }
+
+                // Inter-node connections
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const nodeB = nodes[j];
+                    const dx = nodeB.x - nodeA.x;
+                    const dy = nodeB.y - nodeA.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < connectionDist) {
+                        ctx.beginPath();
+                        ctx.moveTo(nodeA.x, nodeA.y);
+                        ctx.lineTo(nodeB.x, nodeB.y);
+                        const alpha = (1 - dist / connectionDist) * 0.35;
+                        ctx.strokeStyle = lineColor;
+                        ctx.lineWidth = 0.8;
+                        ctx.stroke();
+
+                        // Flowing data pulses
+                        const time = (Date.now() * 0.001 * (1 + nodeA.r * 0.1)) % 1;
+                        const px = nodeA.x + dx * time;
+                        const py = nodeA.y + dy * time;
+
+                        ctx.beginPath();
+                        ctx.arc(px, py, 1.2, 0, Math.PI * 2);
+                        ctx.fillStyle = pulseColor;
+                        ctx.fill();
+                    }
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        setTimeout(animate, 100);
     }
 
     // 11. Custom Interactive Cursor with Smooth Trail

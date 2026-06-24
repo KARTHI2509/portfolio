@@ -278,7 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 10. Interactive 3D Parallax Tilt for Hero Card
     const heroCard = document.getElementById('heroProfileCard');
-    const heroCanvas = document.getElementById('neural-canvas');
+    const heroImg = heroCard ? heroCard.querySelector('.hero-profile-img') : null;
     if (heroCard) {
         const glow = heroCard.querySelector('.profile-card-glow');
 
@@ -299,11 +299,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 glow.style.opacity = '1';
                 glow.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(59, 130, 246, 0.4) 0%, transparent 70%)`;
             }
-            if (heroCanvas) {
-                // Parallax shift for the canvas core
-                const moveX = ((x - centerX) / centerX) * 12; // Max 12px shift
-                const moveY = ((y - centerY) / centerY) * 12;
-                heroCanvas.style.transform = `translate3d(${moveX}px, ${moveY}px, 20px) scale(1.03)`;
+            if (heroImg) {
+                // Parallax shift for the image
+                const moveX = ((x - centerX) / centerX) * 8; // Max 8px shift
+                const moveY = ((y - centerY) / centerY) * 8;
+                heroImg.style.transform = `translate3d(${moveX}px, ${moveY}px, 20px) scale(1.05)`;
             }
         });
 
@@ -312,29 +312,31 @@ document.addEventListener('DOMContentLoaded', () => {
             if (glow) {
                 glow.style.opacity = '0';
             }
-            if (heroCanvas) {
-                heroCanvas.style.transform = 'translateZ(20px) scale(1)';
+            if (heroImg) {
+                heroImg.style.transform = 'translateZ(20px) scale(1.02)';
             }
         });
     }
 
     // 12. Interactive Canvas Neural Network Animation
-    if (heroCanvas) {
-        const ctx = heroCanvas.getContext('2d');
-        let width = heroCanvas.width = heroCanvas.offsetWidth;
-        let height = heroCanvas.height = heroCanvas.offsetHeight;
+    const aboutCanvas = document.getElementById('neural-canvas');
+    const aboutCard = document.getElementById('aboutCanvasCard');
+    if (aboutCanvas && aboutCard) {
+        const ctx = aboutCanvas.getContext('2d');
+        let width = aboutCanvas.width = aboutCanvas.offsetWidth;
+        let height = aboutCanvas.height = aboutCanvas.offsetHeight;
 
         // Resize handler
         window.addEventListener('resize', () => {
-            if (heroCanvas.offsetWidth && heroCanvas.offsetHeight) {
-                width = heroCanvas.width = heroCanvas.offsetWidth;
-                height = heroCanvas.height = heroCanvas.offsetHeight;
+            if (aboutCanvas.offsetWidth && aboutCanvas.offsetHeight) {
+                width = aboutCanvas.width = aboutCanvas.offsetWidth;
+                height = aboutCanvas.height = aboutCanvas.offsetHeight;
             }
         });
 
         // Neural Net Config
         const numNodes = 40;
-        const connectionDist = 80;
+        const connectionDist = 85;
         const nodes = [];
         let canvasMouseX = null;
         let canvasMouseY = null;
@@ -345,8 +347,8 @@ document.addEventListener('DOMContentLoaded', () => {
             nodes.push({
                 x: Math.random() * width,
                 y: Math.random() * height,
-                vx: (Math.random() - 0.5) * 0.6,
-                vy: (Math.random() - 0.5) * 0.6,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5,
                 r: Math.random() * 2 + 1.5,
                 pulseSpeed: 0.03 + Math.random() * 0.04,
                 pulseVal: Math.random() * Math.PI
@@ -354,14 +356,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Mouse hover inside card coordinates
-        heroCard.addEventListener('mousemove', (e) => {
-            const rect = heroCanvas.getBoundingClientRect();
+        aboutCard.addEventListener('mousemove', (e) => {
+            const rect = aboutCanvas.getBoundingClientRect();
             canvasMouseX = e.clientX - rect.left;
             canvasMouseY = e.clientY - rect.top;
             isCanvasHovered = true;
         });
 
-        heroCard.addEventListener('mouseleave', () => {
+        aboutCard.addEventListener('mouseleave', () => {
             canvasMouseX = null;
             canvasMouseY = null;
             isCanvasHovered = false;
@@ -391,8 +393,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     const dy = canvasMouseY - node.y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
                     if (dist < 100) {
-                        node.x += dx * 0.015;
-                        node.y += dy * 0.015;
+                        node.x += dx * 0.02;
+                        node.y += dy * 0.02;
                     }
                 }
 

@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karthik Thalipineni | Portfolio</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+</head>
+
+<body>
+
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+    <div class="custom-cursor-outline"></div>
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader">
+            <span class="loader-text">KT</span>
+        </div>
+    </div>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress"></div>
+
+    <!-- Navigation -->
+    <header class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="#home" class="logo">Karthik<span>.</span></a>
+            <nav class="nav-menu">
+                <ul class="nav-list">
+                    <li><a href="#home" class="nav-link active">Home</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#skills" class="nav-link">Skills</a></li>
+                    <li><a href="#experience" class="nav-link">Experience</a></li>
+                    <li><a href="#projects" class="nav-link">Projects</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="nav-controls">
+                <button id="theme-toggle" aria-label="Toggle Theme">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <button class="mobile-toggle" aria-label="Toggle Menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div id="particles-js" style="position: absolute; width: 100%; height: 100%; z-index: -2;"></div>
+            <div class="hero-bg">
+                <div class="blob blob-1"></div>
+                <div class="blob blob-2"></div>
+            </div>
+            <div class="container hero-content">
+                <div class="hero-text fade-in-up">
+                    <p class="greeting">Hi, my name is</p>
+                    <h1 class="name">Karthik Thalipineni.</h1>
+                    <h2 class="roles">I am an <span class="typing-text"></span></h2>
+                    <p class="summary">Aspiring Computer Science Engineering student specializing in Artificial
+                        Intelligence and Machine Learning. Eager to contribute analytical thinking and creative
+                        solutions to solve real-world challenges.</p>
+                    <div class="hero-buttons">
+                        <a href="#resume" class="btn btn-primary">Download Resume</a>
+                        <a href="https://github.com/KARTHI2509" target="_blank" class="btn btn-outline">My GitHub</a>
+                    </div>
+                </div>
+                <div class="hero-image-wrapper fade-in-up" data-delay="300">
+                    <div class="profile-card-3d" id="heroProfileCard">
+                        <div class="profile-card-glow"></div>
+                        <div class="profile-card-border"></div>
+                        <div class="profile-card-content">
+                            <img src="profile.jpg" alt="Karthik Thalipineni" class="hero-profile-img">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Scroll Down Indicator -->
+            <div class="scroll-down-indicator fade-in-up" data-delay="500">
+                <a href="#about" aria-label="Scroll down">
+                    <div class="mouse-icon">
+                        <div class="wheel"></div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="container">
+                <h2 class="section-title fade-in-up">About Me</h2>
+                <div class="about-grid">
+                    <div class="about-image-wrapper fade-in-up">
+                        <div class="about-image glass-card">
+                            <div class="image-placeholder"><i class="fa-solid fa-user-astronaut"></i></div>
+                        </div>
+                    </div>
+                    <div class="about-text fade-in-up" data-delay="200">
+                        <h3>Professional Summary</h3>
+                        <p>I am currently a B.Tech student in Computer Science Engineering (AI & ML) at Madanapalle
+                            Institute of Technology & Science. With hands-on experience in deep learning, cybersecurity,
+                            and web technologies, I aim to merge theoretical knowledge with practical engineering.</p>
+
+                        <div class="education-card glass-card">
+                            <h4><i class="fa-solid fa-graduation-cap"></i> Education</h4>
+                            <div class="edu-item">
+                                <h5>B.Tech in CSE (AI & ML)</h5>
+                                <p class="institution">Madanapalle Institute of Technology & Science (MITS), India</p>
+                                <div class="edu-meta">
+                                    <span class="year"><i class="fa-regular fa-calendar"></i> 2023 – 2027</span>
+                                    <span class="grade"><i class="fa-solid fa-star"></i> CGPA: 8.89/10</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="section">
+            <div class="container">
+                <h2 class="section-title fade-in-up">Technical Skills</h2>
+                <div class="skills-grid">
+                    <!-- Languages -->
+                    <div class="skill-category glass-card fade-in-up">
+                        <h3><i class="fa-solid fa-code"></i> Languages</h3>
+                        <div class="skill-list">
+                            <div class="skill-item">
+                                <div class="skill-info"><span>Python</span><span>90%</span></div>
+                                <div class="progress-bar">
+                                    <div class="progress" data-width="90%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-info"><span>Java</span><span>80%</span></div>
+                                <div class="progress-bar">
+                                    <div class="progress" data-width="80%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-info"><span>C</span><span>85%</span></div>
+                                <div class="progress-bar">
+                                    <div class="progress" data-width="85%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-info"><span>SQL</span><span>85%</span></div>
+                                <div class="progress-bar">
+                                    <div class="progress" data-width="85%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-info"><span>HTML/CSS</span><span>90%</span></div>
+                                <div class="progress-bar">
+                                    <div class="progress" data-width="90%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI / ML -->
+                    <div class="skill-category glass-card fade-in-up" data-delay="100">
+                        <h3><i class="fa-solid fa-brain"></i> Machine Learning</h3>
+                        <div class="skill-list">
+                            <div class="skill-item">
+                                <div class="skill-info"><span>TensorFlow</span><span>85%</span></div>
+                                <div class="progress-bar">
+                                    <div class="progress" data-width="85%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-info"><span>Deep Learning (CNN)</span><span>80%</span></div>
+                                <div class="progress-bar">
+                                    <div class="progress" data-width="80%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-info"><span>OpenCV & YOLOv8</span><span>75%</span></div>
+                                <div class="progress-bar">
+                                    <div class="progress" data-width="75%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tools & DB -->
+                    <div class="skill-category glass-card fade-in-up" data-delay="200">
+                        <h3><i class="fa-solid fa-screwdriver-wrench"></i> Databases & Tools</h3>
+                        <div class="skill-tags">
+                            <span class="tag">MySQL</span>
+                            <span class="tag">MongoDB</span>
+                            <span class="tag">Git</span>
+                            <span class="tag">GitHub</span>
+                            <span class="tag">VS Code</span>
+                            <span class="tag">Cisco Packet Tracer</span>
+                            <span class="tag">Roboflow</span>
+                            <span class="tag">Figma</span>
+                        </div>
+                    </div>
+
+                    <!-- Core Subjects -->
+                    <div class="skill-category glass-card fade-in-up" data-delay="300">
+                        <h3><i class="fa-solid fa-book"></i> Core Subjects</h3>
+                        <div class="skill-tags">
+                            <span class="tag">Data Structures</span>
+                            <span class="tag">DBMS</span>
+                            <span class="tag">Operating Systems</span>
+                            <span class="tag">Cloud Computing</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="section">
+            <div class="container">
+                <h2 class="section-title fade-in-up">Experience & Internships</h2>
+                <div class="timeline">
+                    <!-- Intern 1 -->
+                    <div class="timeline-item fade-in-up">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content glass-card">
+                            <span class="timeline-date">2025</span>
+                            <h3>Cyber Security Virtual Intern</h3>
+                            <h4>Cisco Networking Academy <span class="badge">Remote</span></h4>
+                            <ul class="timeline-list">
+                                <li>Created and secured a college network with 5+ VLANs and 20+ connected devices using
+                                    ACLs and firewall configurations.</li>
+                                <li>Applied defense-in-depth security strategies and VPN access control, improving
+                                    simulated network security by 40%.</li>
+                                <li>Established secure communication across 3 network segments, reducing unauthorized
+                                    access risks by 35% in simulation.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Intern 2 -->
+                    <div class="timeline-item fade-in-up">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content glass-card">
+                            <span class="timeline-date">2025</span>
+                            <h3>Deep Learning Intern</h3>
+                            <h4>Garbage Classification Project <span class="badge">Remote</span></h4>
+                            <ul class="timeline-list">
+                                <li>Built a convolutional neural network model for classifying waste into 6 categories
+                                    with high accuracy.</li>
+                                <li>Processed and trained on 1000+ labeled images using TensorFlow and OpenCV for
+                                    enhanced model performance.</li>
+                                <li>Improved classification accuracy by 15% through data preprocessing and
+                                    hyperparameter optimization.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="section">
+            <div class="container">
+                <h2 class="section-title fade-in-up">Featured Projects</h2>
+
+                <div class="project-filters fade-in-up">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="ai">AI / ML</button>
+                    <button class="filter-btn" data-filter="web">Web Dev</button>
+                    <button class="filter-btn" data-filter="security">Cybersecurity</button>
+                </div>
+
+                <div class="projects-grid">
+                    <!-- Project 1 -->
+                    <a href="https://github.com/KARTHI2509/garbage-classification-final-submission" target="_blank" class="project-card glass-card fade-in-up" data-category="ai" style="text-decoration: none; color: inherit;">
+                        <div class="project-content">
+                            <div class="project-header">
+                                <i class="fa-solid fa-folder-open folder-icon"></i>
+                                <div class="project-links">
+                                    <i class="fa-brands fa-github" style="font-size: 1.2rem; color: var(--text-secondary);"></i>
+                                </div>
+                            </div>
+                            <h3 class="project-title">Garbage Classification System</h3>
+                            <p class="project-desc">Created a deep learning-based waste classification model using
+                                convolutional neural networks, enhancing accuracy through optimized training and
+                                preprocessing techniques.</p>
+                            <div class="project-tech">
+                                <span>Python</span>
+                                <span>TensorFlow</span>
+                                <span>CNN</span>
+                                <span>OpenCV</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Project 2 -->
+                    <a href="https://github.com/KARTHI2509/crafts" target="_blank" class="project-card glass-card fade-in-up" data-category="web" style="text-decoration: none; color: inherit;">
+                        <div class="project-content">
+                            <div class="project-header">
+                                <i class="fa-solid fa-folder-open folder-icon"></i>
+                                <div class="project-links">
+                                    <i class="fa-brands fa-github" style="font-size: 1.2rem; color: var(--text-secondary);"></i>
+                                </div>
+                            </div>
+                            <h3 class="project-title">CraftHub</h3>
+                            <p class="project-desc">Built a full-stack web platform for showcasing handmade crafts.
+                                Implemented secure user authentication, database integration, and a responsive
+                                interface.</p>
+                            <div class="project-tech">
+                                <span>HTML/CSS</span>
+                                <span>JavaScript</span>
+                                <span>MongoDB</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Project 3 -->
+                    <a href="https://github.com/KARTHI2509/cisco-project" target="_blank" class="project-card glass-card fade-in-up" data-category="security" style="text-decoration: none; color: inherit;">
+                        <div class="project-content">
+                            <div class="project-header">
+                                <i class="fa-solid fa-folder-open folder-icon"></i>
+                                <div class="project-links">
+                                    <i class="fa-brands fa-github" style="font-size: 1.2rem; color: var(--text-secondary);"></i>
+                                </div>
+                            </div>
+                            <h3 class="project-title">Cisco Cyber Security Project</h3>
+                            <p class="project-desc">Planned a secure college network architecture using VLANs, ACLs, and
+                                firewalls. Enforced VPN access control and defense-in-depth strategies.</p>
+                            <div class="project-tech">
+                                <span>Packet Tracer</span>
+                                <span>VLANs/ACLs</span>
+                                <span>Firewall</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Achievements Section -->
+        <section id="achievements" class="section">
+            <div class="container">
+                <h2 class="section-title fade-in-up">Achievements & Certifications</h2>
+                <div class="achievements-grid">
+                    <div class="achievement-card glass-card fade-in-up">
+                        <div class="ach-icon"><i class="fa-solid fa-trophy"></i></div>
+                        <p>Top 2% in NPTEL Internet of Things Certification</p>
+                    </div>
+                    <div class="achievement-card glass-card fade-in-up" data-delay="100">
+                        <div class="ach-icon"><i class="fa-solid fa-medal"></i></div>
+                        <p>Secured Top 15 position in Titan Hackathon</p>
+                    </div>
+                    <div class="achievement-card glass-card fade-in-up" data-delay="200">
+                        <div class="ach-icon"><i class="fa-solid fa-certificate"></i></div>
+                        <p>Google AI/ML Virtual Internship under EduSkills and AICTE</p>
+                    </div>
+                    <div class="achievement-card glass-card fade-in-up" data-delay="300">
+                        <div class="ach-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                        <p>Cisco Cybersecurity Virtual Internship</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resume Download -->
+        <section id="resume" class="section">
+            <div class="container">
+                <div class="resume-cta glass-card fade-in-up">
+                    <h2><i class="fa-regular fa-file-pdf"></i> Resume</h2>
+                    <p>Interested in my complete professional background? Download my resume below.</p>
+                    <a href="resume.pdf" class="btn btn-primary" download>Download PDF Resume</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="container">
+                <h2 class="section-title fade-in-up">Get In Touch</h2>
+                <div class="contact-wrapper">
+                    <div class="contact-info fade-in-up">
+                        <h3>Let's Connect</h3>
+                        <p>I'm currently looking for new opportunities. Whether you have a question or just want to say
+                            hi, I'll try my best to get back to you!</p>
+
+                        <div class="contact-details">
+                            <div class="contact-item">
+                                <i class="fa-solid fa-envelope"></i>
+                                <a href="mailto:karthikthalipineni@gmail.com">karthikthalipineni@gmail.com</a>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fa-solid fa-phone"></i>
+                                <a href="tel:9014739547">9014739547</a>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fa-brands fa-linkedin"></i>
+                                <a href="https://linkedin.com/in/thalipinenikarthi"
+                                    target="_blank">linkedin.com/in/thalipinenikarthi</a>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fa-brands fa-github"></i>
+                                <a href="https://github.com/KARTHI2509" target="_blank">github.com/KARTHI2509</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form class="contact-form glass-card fade-in-up" data-delay="200" id="contactForm">
+                        <div class="form-group">
+                            <input type="text" id="name" required placeholder=" ">
+                            <label for="name">Name</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" required placeholder=" ">
+                            <label for="email">Email</label>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" required placeholder=" " rows="5"></textarea>
+                            <label for="message">Message</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div class="social-links">
+                <a href="https://github.com/KARTHI2509" target="_blank" aria-label="GitHub"><i
+                        class="fa-brands fa-github"></i></a>
+                <a href="https://linkedin.com/in/thalipinenikarthi" target="_blank" aria-label="LinkedIn"><i
+                        class="fa-brands fa-linkedin-in"></i></a>
+                <a href="mailto:karthikthalipineni@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+            </div>
+            <p>&copy; 2026 Karthik Thalipineni. Built with HTML, CSS & JS.</p>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top -->
+    <button id="scrollToTop" aria-label="Scroll to top">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- Script -->
+    <script src="script.js"></script>
+</body>
+
+</html>

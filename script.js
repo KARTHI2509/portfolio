@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 7. Scroll Animations (Intersection Observer)
     const fadeElements = document.querySelectorAll('.fade-in-up');
-    const progressBars = document.querySelectorAll('.progress');
+    const allProgressBars = document.querySelectorAll('.progress');
 
     const appearOptions = {
         threshold: 0.15,
@@ -214,20 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
         appearOnScroll.observe(el);
     });
 
-    // Animate Progress bars when visible
-    const progressObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const width = entry.target.getAttribute('data-width');
-                entry.target.style.width = width;
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.5 });
-
-    progressBars.forEach(bar => {
-        progressObserver.observe(bar);
-    });
+    // Animate Progress bars when visible is handled below in section 17
 
     // 8. Contact Form Prevent Default
     const contactForm = document.getElementById('contactForm');
@@ -543,6 +530,240 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.addEventListener('click', () => {
                 setTimeout(addHoverEffects, 350); // wait for card visibility transitions
             });
+        });
+    }
+
+    // =========================================
+    // PREMIUM MODERN UPGRADES & ANIMATIONS
+    // =========================================
+
+    // A. Hero Section Letter-by-Letter Text Reveal
+    const splitText = (selector) => {
+        const el = document.querySelector(selector);
+        if (!el) return;
+        const text = el.textContent.trim();
+        el.innerHTML = '';
+        text.split('').forEach((char, index) => {
+            const span = document.createElement('span');
+            span.textContent = char === ' ' ? '\u00A0' : char;
+            span.classList.add('char');
+            span.style.transitionDelay = `${index * 25}ms`;
+            el.appendChild(span);
+        });
+        
+        setTimeout(() => {
+            el.querySelectorAll('.char').forEach(span => span.classList.add('reveal'));
+        }, 150);
+    };
+
+    // Stagger character animations
+    splitText('.greeting');
+    setTimeout(() => {
+        splitText('.name');
+    }, 350);
+
+    // B. Hero Background Spotlight Follow
+    const heroSection = document.querySelector('.hero');
+    if (heroSection) {
+        heroSection.style.setProperty('--spotlight-x', '50%');
+        heroSection.style.setProperty('--spotlight-y', '50%');
+        
+        heroSection.addEventListener('mousemove', (e) => {
+            if (window.innerWidth <= 768) return;
+            const rect = heroSection.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            heroSection.style.setProperty('--spotlight-x', `${x}px`);
+            heroSection.style.setProperty('--spotlight-y', `${y}px`);
+        });
+    }
+
+    // C. Scroll-linked Parallax blobs and Hero Text
+    window.addEventListener('scroll', () => {
+        if (window.innerWidth <= 768) return;
+        const scrolled = window.scrollY;
+        const blob1 = document.querySelector('.blob-1');
+        const blob2 = document.querySelector('.blob-2');
+        const heroText = document.querySelector('.hero-text');
+        
+        if (scrolled < window.innerHeight) {
+            if (blob1) blob1.style.transform = `translateY(${scrolled * 0.3}px) scale(${1 + scrolled * 0.0004})`;
+            if (blob2) blob2.style.transform = `translateY(${scrolled * -0.2}px) scale(${1 - scrolled * 0.0002})`;
+            if (heroText) heroText.style.transform = `translateY(${scrolled * 0.15}px)`;
+        }
+    });
+
+    // D. Timeline Line Growth & Reveals
+    const timeline = document.querySelector('.timeline');
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    if (timeline) {
+        const timelineObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, { threshold: 0.15 });
+
+        timelineItems.forEach(item => timelineObserver.observe(item));
+
+        window.addEventListener('scroll', () => {
+            const rect = timeline.getBoundingClientRect();
+            const viewHeight = window.innerHeight;
+            
+            const centerOffset = viewHeight / 2;
+            const scrolledHeight = Math.max(0, centerOffset - rect.top);
+            const totalHeight = rect.height;
+            const percent = Math.min(100, (scrolledHeight / totalHeight) * 100);
+            
+            timeline.style.setProperty('--scroll-percent', `${percent}%`);
+        });
+    }
+
+    // E. Staggered Skill Cards and Progress Count-Up
+    const skillCategories = document.querySelectorAll('.skill-category');
+    if (skillCategories.length) {
+        const categoryObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, { threshold: 0.1 });
+        skillCategories.forEach(el => categoryObserver.observe(el));
+    }
+
+    allProgressBars.forEach(bar => {
+        const info = bar.closest('.skill-item').querySelector('.skill-info');
+        const percentageText = info.querySelector('span:last-child');
+        
+        if (percentageText) {
+            const targetVal = parseInt(percentageText.textContent);
+            percentageText.textContent = '0%';
+            
+            const progressObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        let current = 0;
+                        const step = () => {
+                            current += Math.ceil((targetVal - current) * 0.08);
+                            if (current >= targetVal) {
+                                percentageText.textContent = targetVal + '%';
+                            } else {
+                                percentageText.textContent = current + '%';
+                                requestAnimationFrame(step);
+                            }
+                        };
+                        step();
+                        
+                        const width = bar.getAttribute('data-width');
+                        bar.style.width = width;
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            progressObserver.observe(bar);
+        }
+    });
+
+    // F. Card Mouse-based 3D Tilt (Projects & Achievements)
+    const cardsToTilt = document.querySelectorAll('.project-card, .achievement-card');
+    cardsToTilt.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            if (window.innerWidth <= 768) return;
+
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const tiltX = ((centerY - y) / centerY) * 8;
+            const tiltY = ((x - centerX) / centerX) * 8;
+
+            card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateY(-8px) scale3d(1.02, 1.02, 1.02)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
+        });
+    });
+
+    // G. Magnetic Button Attraction (btn, social links, theme toggle)
+    const magneticElements = document.querySelectorAll('.btn, .social-links a, #theme-toggle');
+    magneticElements.forEach(el => {
+        el.addEventListener('mousemove', (e) => {
+            if (window.innerWidth <= 768) return;
+
+            const rect = el.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+
+            el.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+        });
+
+        el.addEventListener('mouseleave', () => {
+            el.style.transform = '';
+        });
+    });
+
+    // H. Back-to-Top Rocket Animation and Forms Ripple click
+    const scrollTop = document.getElementById('scrollToTop');
+    if (scrollTop) {
+        scrollTop.addEventListener('click', (e) => {
+            e.preventDefault();
+            scrollTop.classList.add('launching');
+            
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+
+            setTimeout(() => {
+                scrollTop.classList.remove('launching');
+            }, 1000);
+        });
+    }
+
+    // Ripple click effect on all buttons
+    const rippleButtons = document.querySelectorAll('.btn, #scrollToTop');
+    rippleButtons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            let x = e.clientX - e.target.getBoundingClientRect().left;
+            let y = e.clientY - e.target.getBoundingClientRect().top;
+            
+            let ripple = document.createElement('span');
+            ripple.classList.add('ripple');
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            
+            this.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 650);
+        });
+    });
+
+    // Forms success checkmark override mock
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            // Wait slightly after standard mock transitions to insert visual checkmark
+            setTimeout(() => {
+                const btn = contactForm.querySelector('button');
+                
+                // Create checkmark icon
+                const checkmark = document.createElement('div');
+                checkmark.className = 'success-checkmark';
+                checkmark.innerHTML = '<i class="fa-solid fa-circle-check" style="font-size: 2.8rem; color: #10b981; filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.4));"></i>';
+                
+                // Insert checkmark above button
+                contactForm.insertBefore(checkmark, btn);
+                
+                setTimeout(() => {
+                    checkmark.remove();
+                }, 2900);
+            }, 50);
         });
     }
 
